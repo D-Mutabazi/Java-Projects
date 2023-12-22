@@ -75,6 +75,21 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener {
         g.setColor(Color.yellow);
         g.fillOval(ballposX, ballposY, 20, 20);
 
+        // check for game over (i.e. ball drops below the player paddle)
+        if(ballposY >= 570){
+            play = false ; //game stops
+            ballXdir = 0 ;
+            ballYdir = 0 ; // ball x + y position not updatedd
+
+            //game over display
+            g.setColor(Color.RED);
+            g.setFont(new Font("serif", Font.BOLD, 30));
+            g.drawString("GAME OVER, SCORE: "+score, 190, 300);
+
+            g.setFont(new Font("serif", Font.BOLD, 20));
+            g.drawString("Press Enter to Restart", 230, 350);
+
+        }
         g.dispose();
     }
 
@@ -158,6 +173,21 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener {
             }else{
                 moveLeft() ;
             } 
+        }
+        //detect arrow pressed
+        if(e.getKeyCode() == KeyEvent.VK_ENTER){
+            //restore default properties of the game 
+            if(!play){
+                play = true ; 
+                ballposX = 120 ; // reposition ball and player paddle postions
+                ballposY = 350 ;
+                ballXdir = -1 ; 
+                ballYdir = -2 ; 
+                playerX = 310 ; 
+                score = 0  ; // reset the score
+                totalBricks = 21 ;
+                map = new MapGenerator(3, 7) ; // redefine the map of bricks
+             }
         }
     }
     public void moveLeft(){
