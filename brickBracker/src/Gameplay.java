@@ -4,6 +4,8 @@ import javax.swing.JPanel;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -30,13 +32,17 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener {
     private int ballXdir = -1 ; 
     private int ballYdir = -2 ; 
 
+    private MapGenerator map ; 
     //constructor
     public Gameplay(){
+        map = new MapGenerator(3, 7) ; 
         addKeyListener(this);
         setFocusable(true); //ensures panel can receive key events
         setFocusTraversalKeysEnabled(false);
         timer = new Timer(delay, this);
         timer.start()  ;
+
+
     }
 
     // game visuals
@@ -45,13 +51,17 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener {
         g.setColor(Color.BLACK);
         g.fillRect(1,1 , 692, 592);
 
+        // draw map
+        map.draw((Graphics2D)g) ; 
+
+
         //borders
         g.setColor(Color.yellow);
         g.fillRect(0, 0, 3, 592);
         g.fillRect(0, 0, 692, 3);
         g.fillRect(691, 0, 3, 592);
 
-        //paddle
+        //paddle - player controls
         g.setColor(Color.green);
         g.fillRect(playerX, 550, 100, 8);
 
@@ -65,7 +75,29 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         timer.start() ;
-        repaint();
+
+        // update ball positions at start if game
+        if(play){
+            // intersection of ball and paddle
+            if( new Rectangle(ballposX, ballposY, 20,20).intersects(new Rectangle(playerX, 550, 100, 8))){
+                // ball bounces in the y direction
+                ballYdir = -ballYdir ; 
+            }
+
+            ballposX += ballXdir ; 
+            ballposY += ballYdir ; 
+            //left border
+            if(ballposX < 0){
+                ballXdir = -ballXdir ; 
+            }
+            if(ballposY < 0){
+                ballYdir = -ballYdir ; 
+            }
+            if(ballposX > 670){
+                ballXdir = -ballXdir ;  
+            }
+        }
+        repaint(); // repaints/refreshes screen with updated positions
     }
 
     @Override
@@ -99,13 +131,13 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener {
     @Override
     public void keyReleased(KeyEvent e) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'keyReleased'");
+        // throw new UnsupportedOperationException("Unimplemented method 'keyReleased'");
     }
 
     @Override
     public void keyTyped(KeyEvent e) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'keyTyped'");
+        // throw new UnsupportedOperationException("Unimplemented method 'keyTyped'");
     }
     
 }
