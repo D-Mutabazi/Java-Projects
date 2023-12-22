@@ -84,6 +84,42 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener {
                 ballYdir = -ballYdir ; 
             }
 
+            // collision detection
+            A: for(int i=0; i<map.map.length ; i++){
+                for(int j=0 ; j<map.map[0].length ; j++){
+                    // brick not collided
+                    if(map.map[i][j] >0){
+                        int brickX = j*map.brickWidth +80;
+                        int brickY = i*map.brickHeight +50 ;
+                        int brickWidth = map.brickWidth ;
+                        int brickHeight = map.brickHeight ; 
+
+                        //create rectangle around brick (to detect )
+                        Rectangle rect = new Rectangle(brickX, brickY, brickWidth, brickHeight) ;
+                        //rectangle around ball to detect position
+                        Rectangle ballRect = new Rectangle(ballposX, ballposY, 20,20) ;
+                        Rectangle brickRect  = rect ;
+
+                        // check intersection + increment score 
+                        if(ballRect.intersects(brickRect)){
+                            map.setBrickValue(0, i, j);
+                            totalBricks-- ; 
+                            score+=5 ;
+
+                            //left & right intersection f
+                            if(ballposX +19 <= brickRect.x || ballposX+1 >= brickRect.x + brickRect.width){
+                                ballXdir = -ballXdir ;
+                            }else{ //top or bottom intersection
+                                ballYdir = -ballYdir ; 
+                            }
+
+                            break A ; //break out the double for loop at collision
+                        }
+
+                    }
+                }
+            }
+
             ballposX += ballXdir ; 
             ballposY += ballYdir ; 
             //left border
@@ -131,7 +167,7 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener {
     @Override
     public void keyReleased(KeyEvent e) {
         // TODO Auto-generated method stub
-        // throw new UnsupportedOperationException("Unimplemented method 'keyReleased'");
+         // throw new UnsupportedOperationException("Unimplemented method 'keyReleased'");
     }
 
     @Override
