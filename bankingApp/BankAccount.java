@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 public class BankAccount {
-     int balance ; // store account balance
+    int balance ; // store account balance
     int previousTransaction;
     String customerName;
     String customerId ;
@@ -21,9 +21,16 @@ public class BankAccount {
     }
     // withdraw money
     void withdraw(int amount){
-        if(amount != 0 ){
-            balance = balance - amount ;
-            previousTransaction = -amount ; //keep track of amount withdrawn per transaction
+        if(amount != 0  && balance > 0){ //non-zero balance
+            //check for if funds sufficient
+            if(balance > amount){
+                balance = balance - amount ;
+                previousTransaction = -amount ; //keep track of amount withdrawn per transaction
+            }else{
+                System.out.println("Insufficient funds! Account balance less than amount specified");
+            }
+        }else{
+            System.out.println("Insufficient funds!") ;
         }
     }
     // return statetement of previous transaction
