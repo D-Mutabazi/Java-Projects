@@ -67,10 +67,20 @@ class BankAccount{
             System.out.println("\n") ;
 
             switch(option){
+                case 'A':
+                    System.out.println("-------------------------------------------");
+                    System.out.println("Balance: "+balance);
+                    System.out.println("-------------------------------------------");
+                    System.out.println("\n");
+                    break ;
+                    case 'B':
+                    Syse
 
             }
         }while( option != 'E');
-        
+
+        System.out.println(customerId);
+
 
 
     }
