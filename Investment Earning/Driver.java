@@ -1,4 +1,6 @@
 import java.util.Scanner;
+import java.text.* ; // will be used to handle precision
+
 public class Driver{
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
@@ -6,6 +8,7 @@ public class Driver{
         double buyingPrice = scan.nextDouble() ;
         int day  = 1 ;
         double closingPrice = 0.1 ;
+        DecimalFormat df = new DecimalFormat("0.00"); //earnings will be rounded to two decimal places
 
         // enter closing price indefinitely (sentinel controlled)
         while(true){
@@ -15,9 +18,9 @@ public class Driver{
             double earnings = closingPrice - buyingPrice;
             // earnings report
             if(earnings > 0){
-                System.out.println("After day "+day+", you earned "+earnings+ " per share");
+                System.out.println("After day "+day+", you earned "+df.format(earnings)+ " per share");
             }else if(earnings < 0){
-                System.out.println("After day "+day+", you lost "+ (-earnings) +" per share.") ;
+                System.out.println("After day "+day+", you lost "+ df.format((-earnings)) +" per share.") ;
             }else{
                 System.out.println("After day "+day+", you have made no earnings per share.");
             }
