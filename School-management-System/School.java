@@ -7,8 +7,8 @@ import java.util.List;
 public class School {
     private List<Teachers> teachers ; //list allows teachers to be added dynamically
     private List<Student> students; //list allows student to be added dynamically
-    private int totalMoneySpent;
-    private int totalMoneyEarned;
+    private static int totalMoneySpent;
+    private static int totalMoneyEarned;
 
     public School(List<Teachers> teachers,List<Student> students){
         this.teachers = teachers;
@@ -50,7 +50,7 @@ public class School {
      * Adds total money earned  by the school.
      * @param moneyEarned
      */
-    public void updateTotalMoneyEarned(int moneyEarned){
+    public static void updateTotalMoneyEarned(int moneyEarned){
         totalMoneyEarned += moneyEarned;
     }
 
@@ -67,7 +67,7 @@ public class School {
      * its teachers
      * @param MoneySpent
      */
-    public void updateTotalMoneySpent(int moneySpent){
+    public static void updateTotalMoneySpent(int moneySpent){
         totalMoneyEarned -= moneySpent;
     }
 
